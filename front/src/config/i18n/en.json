@@ -739,6 +739,56 @@
         "defaultDeletionError": "There was an error deleting the device.",
         "conflictError": "Current device is already in Gladys."
       }
+    },
+    "tuya": {
+      "title": "Tuya",
+      "description": "Control your Tuya devices.",
+      "deviceTab": "Devices",
+      "discoverTab": "Tuya discover",
+      "setupTab": "Setup",
+      "discoverDeviceDescr": "Automatically scan Tuya devices",
+      "nameLabel": "Device Name",
+      "namePlaceholder": "Enter the name of your device",
+      "modelLabel": "Model",
+      "roomLabel": "Room",
+      "saveButton": "Save",
+      "updateButton": "Update",
+      "alreadyCreatedButton": "Already created",
+      "deleteButton": "Delete",
+      "unmanagedModelButton": "Model not managed",
+      "device": {
+        "title": "Devices in Gladys",
+        "search": "Search devices",
+        "updates": "Check updates",
+        "editButton": "Edit",
+        "noDeviceFound": "No Tuya device found.",
+        "featuresLabel": "Features"
+      },
+      "discover": {
+        "title": "Devices detected on your Tuya cloud account",
+        "description": "Tuya devices are automatically discovered. Your Tuya devices need to be added to your Tuya cloud account before.",
+        "error": "Error discovering Tuya devices. Please verify your credentials on Setup.",
+        "noDeviceFound": "No Tuya device discovered.",
+        "scan": "Scan"
+      },
+      "setup": {
+        "title": "Tuya configuration",
+        "description": "You can connect Gladys to your Tuya cloud account to command the associated devices.",
+        "userLabel": "Username",
+        "userPlaceholder": "Enter Tuya username",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Enter Tuya password",
+        "saveLabel": "Save configuration",
+        "error": "An error occured while saving configuration.",
+        "connecting": "Configuration saved. Now connecting to your Tuya cloud account...",
+        "connected": "Connected to the Tuya cloud account with success !",
+        "connectionError": "Error while connecting, please check your configuration."
+      },
+      "error": {
+        "defaultError": "There was an error saving the device.",
+        "defaultDeletionError": "There was an error deleting the device.",
+        "conflictError": "Current device is already in Gladys."
+      }
     }
   },
   "editScene": {

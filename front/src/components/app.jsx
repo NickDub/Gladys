@@ -93,6 +93,12 @@ import EweLinkEditPage from '../routes/integration/all/ewelink/edit-page';
 import EweLinkDiscoverPage from '../routes/integration/all/ewelink/discover-page';
 import EweLinkSetupPage from '../routes/integration/all/ewelink/setup-page';
 
+// Tuya
+import TuyaPage from '../routes/integration/all/tuya/device-page';
+import TuyaEditPage from '../routes/integration/all/tuya/edit-page';
+import TuyaDiscoverPage from '../routes/integration/all/tuya/discover-page';
+import TuyaSetupPage from '../routes/integration/all/tuya/setup-page';
+
 const defaultState = getDefaultState();
 const store = createStore(defaultState);
 
@@ -197,7 +203,10 @@ const AppRouter = connect(
         <EweLinkEditPage path="/dashboard/integration/device/ewelink/edit/:deviceSelector" />
         <EweLinkDiscoverPage path="/dashboard/integration/device/ewelink/discover" />
         <EweLinkSetupPage path="/dashboard/integration/device/ewelink/setup" />
-
+        <TuyaPage path="/dashboard/integration/device/tuya" />
+        <TuyaEditPage path="/dashboard/integration/device/tuya/edit/:deviceSelector" />
+        <TuyaDiscoverPage path="/dashboard/integration/device/tuya/discover" />
+        <TuyaSetupPage path="/dashboard/integration/device/tuya/setup" />
         <BluetoothDevicePage path="/dashboard/integration/device/bluetooth" />
         <BluetoothEditDevicePage path="/dashboard/integration/device/bluetooth/:deviceSelector" />
         <BluetoothSetupPage path="/dashboard/integration/device/bluetooth/setup" />

@@ -37,5 +37,9 @@
   {
     "key": "eWeLink",
     "img": "/assets/integrations/cover/ewelink.jpg"
+  },
+  {
+    "key": "tuya",
+    "img": "/assets/integrations/cover/tuya.jpg"
   }
 ]
