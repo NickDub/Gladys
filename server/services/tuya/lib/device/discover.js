@@ -1,10 +1,10 @@
 const Promise = require('bluebird');
 const logger = require('../../../../utils/logger');
-const { DEVICE_EXTERNAL_ID_BASE, EWELINK_REGION_KEY } = require('../utils/constants');
+const { DEVICE_EXTERNAL_ID_BASE, TUYA_REGION_KEY } = require('../utils/constants');
 const models = require('../models');
 
 /**
- * @description Retrieve eWelink devices from cloud.
+ * @description Retrieve Tuya devices from cloud.
  * @returns {Promise<Array<Object>>} Resolve with array of new devices.
  * @example
  * discover();
@@ -14,8 +14,8 @@ async function discover() {
     await this.connect();
   }
 
-  const region = await this.gladys.variable.getValue(EWELINK_REGION_KEY, this.serviceId);
-  const connection = new this.EweLinkApi({ at: this.accessToken, region });
+  const region = await this.gladys.variable.getValue(TUYA_REGION_KEY, this.serviceId);
+  const connection = new this.TuyaCloud({ at: this.accessToken, region });
   const discoveredDevices = await connection.getDevices();
   await this.throwErrorIfNeeded(discoveredDevices, true);
 

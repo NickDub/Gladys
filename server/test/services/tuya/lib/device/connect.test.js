@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const sinon = require('sinon');
+const { assert } = require('sinon');
 const proxyquire = require('proxyquire').noCallThru();
 const {
   serviceId,
@@ -10,85 +10,73 @@ const {
   variableOkFalseRegion,
   variableNok,
 } = require('../../mocks/consts.test');
-const EweLinkApi = require('../../mocks/ewelink-api.mock.test');
+const tuyaCloud = require('../../mocks/tuya-cloud.mock.test');
 
-const { assert } = sinon;
-
-const EwelinkService = proxyquire('../../../../../services/ewelink/index', {
-  'ewelink-api': EweLinkApi,
+const TuyaService = proxyquire('../../../../../services/tuya/index', {
+  'tuya-cloud': tuyaCloud,
 });
 
-describe('EwelinkHandler connect', () => {
-  beforeEach(() => {
-    sinon.reset();
-  });
-
+describe('TuyaHandler connect', () => {
   it('should connect', async () => {
     const gladys = { event, variable: variableOk };
-    const eweLinkService = EwelinkService(gladys, serviceId);
-    await eweLinkService.device.connect();
+    const tuyaService = TuyaService(gladys, serviceId);
+    await tuyaService.device.connect();
 
     assert.notCalled(gladys.variable.setValue);
-    assert.calledWithExactly(gladys.event.emit, 'websocket.send-all', { type: 'ewelink.connected' });
+    assert.calledWithExactly(gladys.event.emit, 'websocket.send-all', { type: 'tuya.connected' });
 
-    expect(eweLinkService.device.configured).to.equal(true);
-    expect(eweLinkService.device.connected).to.equal(true);
-    expect(eweLinkService.device.accessToken).to.equal('validAccessToken');
-    expect(eweLinkService.device.apiKey).to.equal('validApiKey');
+    expect(tuyaService.device.configured).to.equal(true);
+    expect(tuyaService.device.connected).to.equal(true);
   });
   it('should return not configured error', async () => {
     const gladys = { event, variable: variableNotConfigured };
-    const eweLinkService = EwelinkService(gladys, serviceId);
+    const tuyaService = TuyaService(gladys, serviceId);
     try {
-      await eweLinkService.device.connect();
+      await tuyaService.device.connect();
       assert.fail();
     } catch (error) {
       assert.calledWithExactly(gladys.event.emit, 'websocket.send-all', {
-        type: 'ewelink.error',
+        type: 'tuya.error',
         payload: 'Service is not configured',
       });
-      expect(error.message).to.equal('EWeLink error: Service is not configured');
+      expect(error.message).to.equal('Tuya: Error, Service is not configured');
     }
   });
   it('should get region and connect', async () => {
     const gladys = { event, variable: variableOkNoRegion };
-    const eweLinkService = EwelinkService(gladys, serviceId);
-    await eweLinkService.device.connect();
+    const tuyaService = TuyaService(gladys, serviceId);
+    await tuyaService.device.connect();
 
     assert.calledWithExactly(gladys.variable.setValue, 'EWELINK_REGION', 'eu', serviceId);
-    assert.calledWithExactly(gladys.event.emit, 'websocket.send-all', { type: 'ewelink.connected' });
+    assert.calledWithExactly(gladys.event.emit, 'websocket.send-all', { type: 'tuya.connected' });
 
-    expect(eweLinkService.device.configured).to.equal(true);
-    expect(eweLinkService.device.connected).to.equal(true);
-    expect(eweLinkService.device.accessToken).to.equal('validAccessToken');
-    expect(eweLinkService.device.apiKey).to.equal('validApiKey');
+    expect(tuyaService.device.configured).to.equal(true);
+    expect(tuyaService.device.connected).to.equal(true);
   });
   it('should get right region and connect', async () => {
     const gladys = { event, variable: variableOkFalseRegion };
-    const eweLinkService = EwelinkService(gladys, serviceId);
-    await eweLinkService.device.connect();
+    const tuyaService = TuyaService(gladys, serviceId);
+    await tuyaService.device.connect();
 
     assert.calledWithExactly(gladys.variable.setValue, 'EWELINK_REGION', 'eu', serviceId);
-    assert.calledWithExactly(gladys.event.emit, 'websocket.send-all', { type: 'ewelink.connected' });
+    assert.calledWithExactly(gladys.event.emit, 'websocket.send-all', { type: 'tuya.connected' });
 
-    expect(eweLinkService.device.configured).to.equal(true);
-    expect(eweLinkService.device.connected).to.equal(true);
-    expect(eweLinkService.device.accessToken).to.equal('validAccessToken');
-    expect(eweLinkService.device.apiKey).to.equal('validApiKey');
+    expect(tuyaService.device.configured).to.equal(true);
+    expect(tuyaService.device.connected).to.equal(true);
   });
   it('should throw an error and emit a message when authentication fail', async () => {
     const gladys = { event, variable: variableNok };
-    const eweLinkService = EwelinkService(gladys, serviceId);
+    const tuyaService = TuyaService(gladys, serviceId);
     try {
-      await eweLinkService.device.connect();
+      await tuyaService.device.connect();
       assert.fail();
     } catch (error) {
       assert.calledWithExactly(gladys.event.emit, 'websocket.send-all', {
-        type: 'ewelink.error',
+        type: 'tuya.error',
         payload: 'Authentication error',
       });
       expect(error.status).to.equal(401);
-      expect(error.message).to.equal('EWeLink error: Authentication error');
+      expect(error.message).to.equal('Tuya: Error, Authentication error');
     }
   });
 });

@@ -1,37 +1,35 @@
 const { EVENTS, WEBSOCKET_MESSAGE_TYPES } = require('../../../../utils/constants');
 const { Error401, Error500 } = require('../../../../utils/httpErrors');
-const { EWELINK_EMAIL_KEY, EWELINK_PASSWORD_KEY, EWELINK_REGION_KEY } = require('../utils/constants');
+const { TUYA_EMAIL_KEY, TUYA_PASSWORD_KEY, TUYA_REGION_KEY } = require('../utils/constants');
 const { connect } = require('./connect');
 const { discover } = require('./discover');
 const { poll } = require('./poll');
 const { setValue } = require('./setValue');
 
 /**
- * @description Add ability to control an eWeLink device.
+ * @description Add ability to control an Tuya device.
  * @param {Object} gladys - Gladys instance.
- * @param {Object} eweLinkApi - EweLink Client.
+ * @param {Object} tuyaCloud - Tuya Cloud Client.
  * @param {string} serviceId - UUID of the service in DB.
  * @example
- * const EweLinkHandler = new EweLinkHandler(gladys, client, serviceId);
+ * const TuyaHandler = new TuyaHandler(gladys, client, serviceId);
  */
-const EweLinkHandler = function EweLinkHandler(gladys, eweLinkApi, serviceId) {
+const TuyaHandler = function TuyaHandler(gladys, tuyaCloud, serviceId) {
   this.gladys = gladys;
-  this.EweLinkApi = eweLinkApi;
+  this.TuyaCloud = tuyaCloud;
   this.serviceId = serviceId;
 
   this.configured = false;
   this.connected = false;
-  this.accessToken = '';
-  this.apiKey = '';
 };
 
 /**
- * @description Throw error if EweLinkApi call response has error.
- * @param {Object} response - EweLinkApi call response.
+ * @description Throw error if Tuya Cloud call response has error.
+ * @param {Object} response - Tuya Cloud call response.
  * @param {boolean} emit - True to emit message.
  * @param {boolean} config - True to reset config.
  * @example
- * const EweLinkHandler = new EweLinkHandler(gladys, client, serviceId);
+ * const TuyaHandler = new TuyaHandler(gladys, client, serviceId);
  */
 async function throwErrorIfNeeded(response, emit = false, config = false) {
   if (response.error) {
@@ -47,9 +45,9 @@ async function throwErrorIfNeeded(response, emit = false, config = false) {
       }
       if (config) {
         await Promise.all([
-          this.gladys.variable.setValue(EWELINK_EMAIL_KEY, '', this.serviceId),
-          this.gladys.variable.setValue(EWELINK_PASSWORD_KEY, '', this.serviceId),
-          this.gladys.variable.setValue(EWELINK_REGION_KEY, '', this.serviceId),
+          this.gladys.variable.setValue(TUYA_EMAIL_KEY, '', this.serviceId),
+          this.gladys.variable.setValue(TUYA_PASSWORD_KEY, '', this.serviceId),
+          this.gladys.variable.setValue(TUYA_REGION_KEY, '', this.serviceId),
         ]);
         this.configured = false;
       }
@@ -65,10 +63,10 @@ async function throwErrorIfNeeded(response, emit = false, config = false) {
   }
 }
 
-EweLinkHandler.prototype.connect = connect;
-EweLinkHandler.prototype.discover = discover;
-EweLinkHandler.prototype.poll = poll;
-EweLinkHandler.prototype.setValue = setValue;
-EweLinkHandler.prototype.throwErrorIfNeeded = throwErrorIfNeeded;
+TuyaHandler.prototype.connect = connect;
+TuyaHandler.prototype.discover = discover;
+TuyaHandler.prototype.poll = poll;
+TuyaHandler.prototype.setValue = setValue;
+TuyaHandler.prototype.throwErrorIfNeeded = throwErrorIfNeeded;
 
-module.exports = EweLinkHandler;
+module.exports = TuyaHandler;

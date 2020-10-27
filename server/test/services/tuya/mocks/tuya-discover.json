@@ -1,0 +1,132 @@
+{
+  "status": 200,
+  "statusText": "OK",
+  "data": {
+    "payload": {
+      "devices": [
+        {
+          "api": {
+            "loginData": {
+              "userName": "email@valid.ok",
+              "password": "S0m3Th1ngTru3",
+              "countryCode": "33",
+              "bizType": "tuya",
+              "from": "tuya"
+            },
+            "region": "eu",
+            "uri": "https://px1.tuyaeu.com/homeassistant",
+            "session": {
+              "accessToken": "EUheu1234567890123eZh0itKcgUTONkd",
+              "refreshToken": "EUheu1234567890123eZh0i7lD4FKBat6",
+              "expireIn": 0,
+              "uri": "https://px1.tuyaeu.com/homeassistant",
+              "expiresIn": 864000
+            }
+          },
+          "data": {
+            "support_stop": true,
+            "online": true,
+            "state": 1
+          },
+          "device": {
+            "id": "431a852fd4c5130d32a4",
+            "name": "Volet",
+            "type": "cover",
+            "icon": "https://images.tuyaeu.com/smart/program_category_icon/clkg.png"
+          }
+        },
+        {
+          "api": {
+            "loginData": {
+              "userName": "email@valid.ok",
+              "password": "S0m3Th1ngTru3",
+              "countryCode": "33",
+              "bizType": "tuya",
+              "from": "tuya"
+            },
+            "region": "eu",
+            "uri": "https://px1.tuyaeu.com/homeassistant",
+            "session": {
+              "accessToken": "EUheu1234567890123eZh0itKcgUTONkd",
+              "refreshToken": "EUheu1234567890123eZh0i7lD4FKBat6",
+              "expireIn": 0,
+              "uri": "https://px1.tuyaeu.com/homeassistant",
+              "expiresIn": 864000
+            }
+          },
+          "data": {
+            "online": true,
+            "state": false
+          },
+          "device": {
+            "id": "9b51a715241e9477ce80",
+            "name": "Prise TV",
+            "type": "switch",
+            "icon": "https://images.tuyaeu.com/smart/icon/001460162698766TR4v1/1571295242db8f709b6dc.png"
+          }
+        },
+        {
+          "api": {
+            "loginData": {
+              "userName": "email@valid.ok",
+              "password": "S0m3Th1ngTru3",
+              "countryCode": "33",
+              "bizType": "tuya",
+              "from": "tuya"
+            },
+            "region": "eu",
+            "uri": "https://px1.tuyaeu.com/homeassistant",
+            "session": {
+              "accessToken": "EUheu1234567890123eZh0itKcgUTONkd",
+              "refreshToken": "EUheu1234567890123eZh0i7lD4FKBat6",
+              "expireIn": 0,
+              "uri": "https://px1.tuyaeu.com/homeassistant",
+              "expiresIn": 864000
+            }
+          },
+          "data": {
+            "online": false,
+            "state": false
+          },
+          "device": {
+            "id": "3e73007a6ea041c6bf73",
+            "name": "Prise lampe",
+            "type": "switch",
+            "icon": "https://images.tuyaeu.com/smart/icon/1528364759f78llubft8l_0.png"
+          }
+        },
+        {
+          "api": {
+            "loginData": {
+              "userName": "email@valid.ok",
+              "password": "S0m3Th1ngTru3",
+              "countryCode": "33",
+              "bizType": "tuya",
+              "from": "tuya"
+            },
+            "region": "eu",
+            "uri": "https://px1.tuyaeu.com/homeassistant",
+            "session": {
+              "accessToken": "EUheu1234567890123eZh0itKcgUTONkd",
+              "refreshToken": "EUheu1234567890123eZh0i7lD4FKBat6",
+              "expireIn": 0,
+              "uri": "https://px1.tuyaeu.com/homeassistant",
+              "expiresIn": 864000
+            }
+          },
+          "data": {},
+          "device": {
+            "id": "5fddce43df17d72d",
+            "name": "Scene 1",
+            "type": "scene"
+          }
+        }
+      ],
+      "scenes": []
+    },
+    "header": {
+      "code": "SUCCESS",
+      "payloadVersion": 1
+    }
+  }
+}

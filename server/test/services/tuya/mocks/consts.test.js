@@ -20,13 +20,13 @@ const variableNotConfigured = {
 
 const variableOk = {
   getValue: (valueId, notUsed) => {
-    if (valueId === 'EWELINK_EMAIL') {
+    if (valueId === 'TUYA_EMAIL') {
       return Promise.resolve('email@valid.ok');
     }
-    if (valueId === 'EWELINK_PASSWORD') {
+    if (valueId === 'TUYA_PASSWORD') {
       return Promise.resolve('S0m3Th1ngTru3');
     }
-    if (valueId === 'EWELINK_REGION') {
+    if (valueId === 'TUYA_REGION') {
       return Promise.resolve('eu');
     }
     return Promise.resolve(undefined);
@@ -36,10 +36,10 @@ const variableOk = {
 
 const variableOkNoRegion = {
   getValue: (valueId, notUsed) => {
-    if (valueId === 'EWELINK_EMAIL') {
+    if (valueId === 'TUYA_EMAIL') {
       return Promise.resolve('email@valid.ok');
     }
-    if (valueId === 'EWELINK_PASSWORD') {
+    if (valueId === 'TUYA_PASSWORD') {
       return Promise.resolve('S0m3Th1ngTru3');
     }
     return Promise.resolve(undefined);
@@ -49,13 +49,13 @@ const variableOkNoRegion = {
 
 const variableOkFalseRegion = {
   getValue: (valueId, notUsed) => {
-    if (valueId === 'EWELINK_EMAIL') {
+    if (valueId === 'TUYA_EMAIL') {
       return Promise.resolve('email@valid.ok');
     }
-    if (valueId === 'EWELINK_PASSWORD') {
+    if (valueId === 'TUYA_PASSWORD') {
       return Promise.resolve('S0m3Th1ngTru3');
     }
-    if (valueId === 'EWELINK_REGION') {
+    if (valueId === 'TUYA_REGION') {
       return Promise.resolve('uk');
     }
     return Promise.resolve(undefined);
@@ -65,13 +65,13 @@ const variableOkFalseRegion = {
 
 const variableNok = {
   getValue: (valueId, notUsed) => {
-    if (valueId === 'EWELINK_EMAIL') {
+    if (valueId === 'TUYA_EMAIL') {
       return Promise.resolve('email@unvalid.ko');
     }
-    if (valueId === 'EWELINK_PASSWORD') {
+    if (valueId === 'TUYA_PASSWORD') {
       return Promise.resolve('S0m3Th1ngF4ls3');
     }
-    if (valueId === 'EWELINK_REGION') {
+    if (valueId === 'TUYA_REGION') {
       return Promise.resolve('eu');
     }
     return Promise.resolve(undefined);
@@ -98,13 +98,13 @@ const stateManagerWith0Devices = {
 
 const stateManagerWith3Devices = {
   get: (key, externalId) => {
-    if (externalId === 'ewelink:10004531ae:0') {
+    if (externalId === 'tuya:10004531ae:0') {
       return GladysPowDevice;
     }
-    if (externalId === 'ewelink:10004533ae:1') {
+    if (externalId === 'tuya:10004533ae:1') {
       return Gladys2Ch1Device;
     }
-    if (externalId === 'ewelink:10004533ae:2') {
+    if (externalId === 'tuya:10004533ae:2') {
       return Gladys2Ch2Device;
     }
     return undefined;
@@ -113,22 +113,22 @@ const stateManagerWith3Devices = {
 
 const stateManagerFull = {
   get: (key, externalId) => {
-    if (externalId === 'ewelink:10004531ae:0') {
+    if (externalId === 'tuya:10004531ae:0') {
       return GladysPowDevice;
     }
-    if (externalId === 'ewelink:10004532ae:0') {
+    if (externalId === 'tuya:10004532ae:0') {
       return GladysOfflineDevice;
     }
-    if (externalId === 'ewelink:10004533ae:1') {
+    if (externalId === 'tuya:10004533ae:1') {
       return Gladys2Ch1Device;
     }
-    if (externalId === 'ewelink:10004533ae:2') {
+    if (externalId === 'tuya:10004533ae:2') {
       return Gladys2Ch2Device;
     }
-    if (externalId === 'ewelink:10004534ae:1') {
+    if (externalId === 'tuya:10004534ae:1') {
       return GladysUnhandledDevice;
     }
-    if (externalId === 'ewelink:10004535ae:0') {
+    if (externalId === 'tuya:10004535ae:0') {
       return GladysThDevice;
     }
     return undefined;

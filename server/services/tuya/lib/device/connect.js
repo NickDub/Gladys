@@ -1,7 +1,7 @@
 const Promise = require('bluebird');
 const { EVENTS, WEBSOCKET_MESSAGE_TYPES } = require('../../../../utils/constants');
 const { ServiceNotConfiguredError } = require('../../../../utils/coreErrors');
-const { EWELINK_EMAIL_KEY, EWELINK_PASSWORD_KEY, EWELINK_REGION_KEY, EWELINK_REGIONS } = require('../utils/constants');
+const { TUYA_EMAIL_KEY, TUYA_PASSWORD_KEY, TUYA_REGION_KEY, TUYA_REGIONS } = require('../utils/constants');
 
 /**
  * @description Connect to eWeLink cloud account and get access token and api key.
@@ -14,22 +14,26 @@ async function connect() {
 
   /* eslint-disable prefer-const */
   let [email, password, region] = await Promise.all([
-    this.gladys.variable.getValue(EWELINK_EMAIL_KEY, this.serviceId),
-    this.gladys.variable.getValue(EWELINK_PASSWORD_KEY, this.serviceId),
-    this.gladys.variable.getValue(EWELINK_REGION_KEY, this.serviceId),
+    this.gladys.variable.getValue(TUYA_EMAIL_KEY, this.serviceId),
+    this.gladys.variable.getValue(TUYA_PASSWORD_KEY, this.serviceId),
+    this.gladys.variable.getValue(TUYA_REGION_KEY, this.serviceId),
   ]);
   /* eslint-enable prefer-const */
 
   if (!email || !password) {
     this.gladys.event.emit(EVENTS.WEBSOCKET.SEND_ALL, {
-      type: WEBSOCKET_MESSAGE_TYPES.EWELINK.ERROR,
+      type: WEBSOCKET_MESSAGE_TYPES.TUYA.ERROR,
       payload: 'Service is not configured',
     });
-    throw new ServiceNotConfiguredError('EWeLink error: Service is not configured');
+    throw new ServiceNotConfiguredError('Tuya: Error, service is not configured');
   }
 
-  if (!Object.values(EWELINK_REGIONS).includes(region)) {
-    const connection = new this.EweLinkApi({ email, password });
+  if (!Object.values(TUYA_REGIONS).includes(region)) {
+    const connection = new this.TuyaCloud({ email, password });
+
+
+
+    
     const response = await connection.getRegion();
     // belt, suspenders ;)
     if (response.error && [401, 406].indexOf(response.error) !== -1) {
@@ -38,12 +42,12 @@ async function connect() {
     await this.throwErrorIfNeeded(response, true, true);
 
     ({ region } = response);
-    await this.gladys.variable.setValue(EWELINK_REGION_KEY, region, this.serviceId);
+    await this.gladys.variable.setValue(TUYA_REGION_KEY, region, this.serviceId);
   }
 
   this.configured = true;
 
-  const connection = new this.EweLinkApi({ email, password, region });
+  const connection = new this.TuyaCloud({ email, password, region });
   const auth = await connection.getCredentials();
   await this.throwErrorIfNeeded(auth, true, true);
 
@@ -52,7 +56,7 @@ async function connect() {
   this.apiKey = auth.user.apikey;
 
   this.gladys.event.emit(EVENTS.WEBSOCKET.SEND_ALL, {
-    type: WEBSOCKET_MESSAGE_TYPES.EWELINK.CONNECTED,
+    type: WEBSOCKET_MESSAGE_TYPES.TUYA.CONNECTED,
   });
 }
 

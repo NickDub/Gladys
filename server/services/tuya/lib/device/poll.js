@@ -3,11 +3,11 @@ const { EVENTS, DEVICE_FEATURE_CATEGORIES, DEVICE_FEATURE_TYPES, STATE } = requi
 const { NotFoundError } = require('../../../../utils/coreErrors');
 const { getDeviceFeature, getDeviceParam } = require('../../../../utils/device');
 const logger = require('../../../../utils/logger');
-const { DEVICE_FIRMWARE, EWELINK_REGION_KEY } = require('../utils/constants');
+const { DEVICE_FIRMWARE, TUYA_REGION_KEY } = require('../utils/constants');
 const { parseExternalId } = require('../utils/parseExternalId');
 
 /**
- * @description Poll values of an eWeLink device.
+ * @description Poll values of an Tuya device.
  * @param {Object} device - The device to poll.
  * @example
  * poll(device);
@@ -17,13 +17,13 @@ async function poll(device) {
     await this.connect();
   }
 
-  const region = await this.gladys.variable.getValue(EWELINK_REGION_KEY, this.serviceId);
+  const region = await this.gladys.variable.getValue(TUYA_REGION_KEY, this.serviceId);
   const { deviceId, channel } = parseExternalId(device.external_id);
-  const connection = new this.EweLinkApi({ at: this.accessToken, region });
-  const eWeLinkDevice = await connection.getDevice(deviceId);
-  await this.throwErrorIfNeeded(eWeLinkDevice);
-  if (!eWeLinkDevice.online) {
-    throw new NotFoundError('EWeLink error: Device is not currently online');
+  const connection = new this.TuyaCloud({ at: this.accessToken, region });
+  const tuyaDevice = await connection.getDevice(deviceId);
+  await this.throwErrorIfNeeded(tuyaDevice);
+  if (!tuyaDevice.online) {
+    throw new NotFoundError('Tuya error: Device is not currently online');
   }
 
   const [binaryFeature, powFeature, tempFeature, humFeature, firmwareParam] = await Promise.all([
@@ -41,7 +41,7 @@ async function poll(device) {
     const currentBinaryState = response.state === 'on' ? STATE.ON : STATE.OFF;
     // if the value is different from the value we have, save new state
     if (binaryFeature.last_value !== currentBinaryState) {
-      logger.debug(`Polling eWeLink ${deviceId}, new value = ${currentBinaryState}`);
+      logger.debug(`Polling Tuya ${deviceId}, new value = ${currentBinaryState}`);
       this.gladys.event.emit(EVENTS.DEVICE.NEW_STATE, {
         device_feature_external_id: `${binaryFeature.external_id}`,
         state: currentBinaryState,
@@ -56,7 +56,7 @@ async function poll(device) {
     const currentPowerState = response.monthly;
     // if the value is different from the value we have, save new state
     if (powFeature.last_value !== currentPowerState) {
-      logger.debug(`Polling eWeLink ${deviceId}, new value = ${currentPowerState}`);
+      logger.debug(`Polling Tuya ${deviceId}, new value = ${currentPowerState}`);
       this.gladys.event.emit(EVENTS.DEVICE.NEW_STATE, {
         device_feature_external_id: `${powFeature.external_id}`,
         state: currentPowerState,
@@ -72,7 +72,7 @@ async function poll(device) {
       const currentTemperature = response.temperature;
       // if the value is different from the value we have, save new state
       if (tempFeature.last_value !== currentTemperature) {
-        logger.debug(`Polling eWeLink ${deviceId}, new value = ${currentTemperature}`);
+        logger.debug(`Polling Tuya ${deviceId}, new value = ${currentTemperature}`);
         this.gladys.event.emit(EVENTS.DEVICE.NEW_STATE, {
           device_feature_external_id: `${tempFeature.external_id}`,
           state: currentTemperature,
@@ -83,7 +83,7 @@ async function poll(device) {
       const currentHumidity = response.humidity;
       // if the value is different from the value we have, save new state
       if (tempFeature.last_value !== currentHumidity) {
-        logger.debug(`Polling eWeLink ${deviceId}, new value = ${currentHumidity}`);
+        logger.debug(`Polling Tuya ${deviceId}, new value = ${currentHumidity}`);
         this.gladys.event.emit(EVENTS.DEVICE.NEW_STATE, {
           device_feature_external_id: `${humFeature.external_id}`,
           state: currentHumidity,
@@ -99,7 +99,7 @@ async function poll(device) {
     const currentVersion = response.fwVersion;
     // if the value is different from the value we have, save new param
     if (firmwareParam !== currentVersion) {
-      logger.debug(`Polling eWeLink ${deviceId}, new value = ${currentVersion}`);
+      logger.debug(`Polling Tuya ${deviceId}, new value = ${currentVersion}`);
       this.gladys.event.emit(EVENTS.DEVICE.ADD_PARAM, {
         name: DEVICE_FIRMWARE,
         value: currentVersion,

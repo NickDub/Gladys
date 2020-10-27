@@ -5,8 +5,8 @@ const TuyaController = require('./api/tuya.controller');
 module.exports = function TuyaService(gladys, serviceId) {
   // require the Tuya module
   // @ts-ignore
-  const tuyaApi = require('tuya-api');
-  const tuyaHandler = new TuyaHandler(gladys, tuyaApi, serviceId);
+  const tuyaCloud = require('tuya-cloud');
+  const tuyaHandler = new TuyaHandler(gladys, tuyaCloud, serviceId);
 
   /**
    * @public

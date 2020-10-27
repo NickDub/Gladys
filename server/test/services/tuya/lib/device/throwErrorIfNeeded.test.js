@@ -2,12 +2,12 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire').noCallThru();
 const { serviceId, event } = require('../../mocks/consts.test');
-const EweLinkApi = require('../../mocks/ewelink-api.mock.test');
+const EweLinkApi = require('../../mocks/tuya-api.mock.test');
 
 const { assert } = sinon;
 
-const EwelinkService = proxyquire('../../../../../services/ewelink/index', {
-  'ewelink-api': EweLinkApi,
+const EwelinkService = proxyquire('../../../../../services/tuya/index', {
+  'tuya-api': EweLinkApi,
 });
 
 describe('EwelinkHandler throwErrorIfNeeded', () => {
@@ -38,7 +38,7 @@ describe('EwelinkHandler throwErrorIfNeeded', () => {
       assert.fail();
     } catch (error) {
       assert.calledOnceWithExactly(gladys.event.emit, 'websocket.send-all', {
-        type: 'ewelink.error',
+        type: 'tuya.error',
         payload: 'Authentication error',
       });
       expect(error.status).to.equal(401);
@@ -74,7 +74,7 @@ describe('EwelinkHandler throwErrorIfNeeded', () => {
       assert.fail();
     } catch (error) {
       assert.calledOnceWithExactly(gladys.event.emit, 'websocket.send-all', {
-        type: 'ewelink.error',
+        type: 'tuya.error',
         payload: 'Device does not exist',
       });
       expect(error.status).to.equal(500);
